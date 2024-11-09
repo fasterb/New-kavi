@@ -1,3 +1,4 @@
+
 const {
 default: makeWASocket,
 useMultiFileAuthState,
@@ -21,7 +22,6 @@ const prefix = '.'
 
 const ownerNumber = ['94768349788']
 
-
 //===================SESSION-AUTH============================
 if (!fs.existsSync(__dirname + '/auth_info_baileys/creds.json')) {
 if(!config.SESSION_ID) return console.log('Please add your session to SESSION_ID env !!')
@@ -30,18 +30,17 @@ const filer = File.fromURL(`https://mega.nz/file/${sessdata}`)
 filer.download((err, data) => {
 if(err) throw err
 fs.writeFile(__dirname + '/auth_info_baileys/creds.json', data, () => {
-console.log("Session downloaded ✅")
+console.log("Session downloaded âœ…")
 })})}
-
 
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 8000;
+
 //=============================================
 
-
 async function connectToWA() {
-console.log("Connecting wa bot 🌝...");
+console.log("Connecting wa bot ðŸ§¬...");
 const { state, saveCreds } = await useMultiFileAuthState(__dirname + '/auth_info_baileys/')
 var { version } = await fetchLatestBaileysVersion()
 
@@ -53,7 +52,7 @@ const conn = makeWASocket({
         auth: state,
         version
         })
-
+    
 conn.ev.on('connection.update', (update) => {
 const { connection, lastDisconnect } = update
 if (connection === 'close') {
@@ -61,23 +60,23 @@ if (lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut) {
 connectToWA()
 }
 } else if (connection === 'open') {
-console.log('😾 Installing... ')
+console.log('ðŸ˜¼ Installing... ')
 const path = require('path');
 fs.readdirSync("./plugins/").forEach((plugin) => {
 if (path.extname(plugin).toLowerCase() == ".js") {
 require("./plugins/" + plugin);
 }
 });
-console.log('Plugins installed successful ✅')
-console.log('KAVI-MD connected to whatsapp👏')
+console.log('Plugins installed successful âœ…')
+console.log('Bot connected to whatsapp âœ…')
 
-let up = `KAVI-MD connected SUCCESSFUL🌈 \n\nPREFIX: ${prefix}`;
+let up = `Wa-BOT connected successful âœ…\n\nPREFIX: ${prefix}`;
 
-conn.sendMessage(0768349788 + "@s.whatsapp.net", { image: { url: `https://telegra.ph/file/900435c6d3157c98c3c88.jpg` }, caption: up })
+conn.sendMessage(ownerNumber + "@s.whatsapp.net", { image: { url: `https://telegra.ph/file/900435c6d3157c98c3c88.jpg` }, caption: up })
 
 }
 })
-conn.ev.on('creds.update', saveCreds)
+conn.ev.on('creds.update', saveCreds)  
 
 conn.ev.on('messages.upsert', async(mek) => {
 mek = mek.messages[0]
@@ -170,9 +169,9 @@ command.function(conn, mek, m,{from, l, quoted, body, isCmd, command, args, q, i
 })
 }
 app.get("/", (req, res) => {
-res.send("hey, bot started✌️");
+res.send("hey, bot startedâœ…");
 });
 app.listen(port, () => console.log(`Server listening on port http://localhost:${port}`));
 setTimeout(() => {
 connectToWA()
-}, 4000); 
+}, 4000);  
